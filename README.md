@@ -4,14 +4,14 @@ This C program demonstrates process and thread creation using POSIX `fork()` and
 
  Features
 
-- Creates **multiple processes** using `fork()`.
-- Each process spawns **multiple threads** using `pthread_create()`.
-- Threads print their unique **PID** and **TID**.
+Creates **multiple processes** using `fork()`.
+Each process spawns **multiple threads** using `pthread_create()`.
+Threads print their unique **PID** and **TID**.
 
 
-To compile and run this program, you need a Linux or Unix-like operating system with the following:
-- GCC compiler
-- POSIX threads (pthread) library
+To compile and run this program, you need linux or a UNIX operating system:
+GCC compiler
+POSIX threads (pthread) library
 
  Cloning the Repository
 
