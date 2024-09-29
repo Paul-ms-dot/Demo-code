@@ -1,6 +1,7 @@
- Multi-Process and Multi-Thread Program
+ Multi-Process and Multi-Thread code
 
-This C program demonstrates process and thread creation using POSIX `fork()` and `pthread` libraries. The program spawns multiple processes, with each process creating several threads, which print their Process ID (PID) and Thread ID (TID).
+This simple C code demonstrates process and thread creation using POSIX `fork()` and `pthread` libraries.
+The program spawns multiple processes, with each process creating several threads, which print their Process ID (PID) and Thread ID (TID).
 
  Features
 
@@ -15,8 +16,7 @@ POSIX threads (pthread) library
 
  Cloning the Repository
 
-```bash
-git clone <repository-url>
+git clone 
 cd <repository-directory>
 
 to compile
