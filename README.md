@@ -1,55 +1,47 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <sys/wait.h>
+# Multi-Process and Multi-Thread Program
 
-#define NUM_PROCESSES 2
-#define NUM_THREADS 3
+This program demonstrates the creation of multiple processes and threads in a Linux environment using the `fork()` and `pthread` libraries in C. Each process creates a set number of threads, and each thread prints its Process ID (PID) and Thread ID (TID).
 
-void* thread_function(void* arg) {
-    int thread_num = *((int*)arg);
-    printf("Thread %d: PID = %d, TID = %ld\n", thread_num, getpid(), pthread_self());
-    return NULL;
-}
+## Code Overview
 
-void create_threads_in_process() {
-    pthread_t threads[NUM_THREADS];
-    int thread_args[NUM_THREADS];
+- The program defines two constants: 
+  - `NUM_PROCESSES` (set to 2): The number of processes to be created.
+  - `NUM_THREADS` (set to 3): The number of threads to be created within each process.
+  
+- The main function creates `NUM_PROCESSES` processes using `fork()`.
+  - Each child process calls the function `create_threads_in_process()` to create `NUM_THREADS` threads using `pthread_create()`.
+  
+- Each thread, when created, prints:
+  - Its corresponding thread number.
+  - The Process ID (PID) of the process in which it is running.
+  - The Thread ID (TID) using `pthread_self()`.
 
-    for (int i = 0; i < NUM_THREADS; i++) {
-        thread_args[i] = i + 1;
-        if (pthread_create(&threads[i], NULL, thread_function, &thread_args[i]) != 0) {
-            perror("Failed to create thread");
-            exit(EXIT_FAILURE);
-        }
-    }
+- The parent process waits for all child processes to complete using `wait()`.
 
-    // Wait for all threads to complete
-    for (int i = 0; i < NUM_THREADS; i++) {
-        pthread_join(threads[i], NULL);
-    }
-}
+### Thread Function
 
-int main() {
-    pid_t pid;
-    for (int i = 0; i < NUM_PROCESSES; i++) {
-        pid = fork();
-        if (pid < 0) {
-            perror("Failed to fork");
-            exit(EXIT_FAILURE);
-        } else if (pid == 0) {
-            // Child process
-            printf("Process %d: PID = %d\n", i + 1, getpid());
-            create_threads_in_process();
-            exit(0);  // Child process should exit after creating threads
-        }
-    }
+The function `thread_function(void* arg)` is the function executed by each thread. It prints:
+  - The thread number passed as an argument.
+  - The process ID (PID) of the process in which the thread is running.
+  - The thread ID (TID) returned by `pthread_self()`.
 
-    // Parent process waits for all child processes
-    for (int i = 0; i < NUM_PROCESSES; i++) {
-        wait(NULL);
-    }
+### Process Creation
 
-    return 0;
-}
+In the `main()` function:
+1. The program creates `NUM_PROCESSES` child processes using `fork()`.
+2. Each child process runs the `create_threads_in_process()` function, creating multiple threads.
+3. After thread creation, each child process exits.
+
+### Thread Creation
+
+The function `create_threads_in_process()`:
+1. Creates `NUM_THREADS` using `pthread_create()`.
+2. Each thread runs the `thread_function()`.
+3. The function waits for all threads to finish using `pthread_join()` before returning.
+
+## How to Compile
+
+To compile the code, use the following command:
+
+```bash
+gcc -o multi_process_thread multi_process_thread.c -lpthread
