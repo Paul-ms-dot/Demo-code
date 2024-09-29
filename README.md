@@ -20,7 +20,9 @@ git clone https://github.com/Paul-ms-dot/Demo-code
 cd <repository-directory>
 
 to compile
+
   gcc -o multi_process_thread multi_process_thread.c -lpthread
 
 to run
+
   multi_process_thread
