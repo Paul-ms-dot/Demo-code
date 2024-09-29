@@ -16,7 +16,7 @@ POSIX threads (pthread) library
 
  Cloning the Repository
 
-git clone 
+git clone https://github.com/Paul-ms-dot/Demo-code
 cd <repository-directory>
 
 to compile
